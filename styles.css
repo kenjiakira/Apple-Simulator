@@ -244,7 +244,152 @@ body {
   .fly.escape {
     animation: flyAway 1s forwards;
   }
+/* Previous weather effects CSS remains the same */
+.weather-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
 
+.rain {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(transparent, #00000080);
+    animation: rain-fall linear infinite;
+}
+
+@keyframes rain-fall {
+    0% {
+        transform: translateY(-100px) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) translateX(20px);
+        opacity: 0;
+    }
+}
+
+.snow {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: snow-fall linear infinite;
+    filter: blur(1px);
+}
+
+@keyframes snow-fall {
+    0% {
+        transform: translateY(-10px) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 10px)) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.apple {
+    transition: background-color 0.5s ease, filter 0.5s ease;
+}
+
+.apple.snowy {
+    background-color: #ffffff !important;
+    filter: brightness(1.2) saturate(0.8);
+}
+
+/* New Weather Control Menu Styles */
+.weather-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.weather-button {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+    min-width: 120px;
+}
+
+.weather-button:hover {
+    background: var(--background);
+    transform: translateY(-1px);
+}
+
+.weather-button.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+}
+
+.weather-button .icon {
+    font-size: 1.2em;
+}
+
+.weather-settings {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: none;
+}
+
+.weather-settings.visible {
+    display: block;
+}
+
+.weather-setting-group {
+    margin-bottom: 1rem;
+}
+
+.weather-setting-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.weather-setting-group input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary);
+}
+
+.weather-setting-value {
+    font-size: 0.8rem;
+    color: var(--text);
+    text-align: right;
+}
   @media (max-width: 640px) {
     .apple-simulator {
       padding: 1.5rem;

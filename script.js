@@ -50,6 +50,22 @@ function stopAllSounds() {
     });
 }
 
+function toggleWeatherMenu() {
+    const weatherControls = document.querySelector('.weather-controls');
+    const weatherSettings = document.querySelector('.weather-settings');
+    const weatherMenuBtn = document.getElementById('weather-menu-toggle');
+    
+    const isVisible = weatherControls.classList.contains('visible');
+    
+    weatherControls.classList.toggle('visible');
+    weatherSettings.classList.toggle('visible');
+    
+    weatherMenuBtn.innerHTML = isVisible ? '🌡️' : '❌';
+    weatherMenuBtn.setAttribute('aria-label', 
+        isVisible ? 'Mở menu thời tiết' : 'Đóng menu thời tiết'
+    );
+}
+
 
 function playSound(isRipe) {
     if (!soundEnabled) return;
@@ -234,7 +250,202 @@ function toggleMode() {
         modeToggle.textContent = "🌙";
     }
 }
+const weatherConfig = {
+    rain: {
+        count: 100,
+        speed: 1,
+        intensity: 1,
+        autoChange: true
+    },
+    snow: {
+        count: 50,
+        speed: 1,
+        intensity: 1,
+        autoChange: true
+    }
+};
 
+let currentWeather = 'none';
+let weatherInterval;
+
+function createWeatherElement(type) {
+    const element = document.createElement('div');
+    element.className = type;
+    
+    element.style.left = `${Math.random() * 100}%`;
+    
+    const baseSpeed = type === 'rain' ? 0.75 : 4;
+    const duration = (baseSpeed / weatherConfig[type].speed) * 
+        (Math.random() * 0.5 + 0.75);
+    
+    element.style.animationDuration = `${duration}s`;
+    
+    const intensity = weatherConfig[type].intensity;
+    const size = type === 'rain' ? 
+        2 * intensity :  
+        8 * intensity;   
+    
+    element.style.width = `${size}px`;
+    if (type === 'rain') {
+        element.style.height = `${100 * intensity}px`;
+    } else {
+        element.style.height = `${size}px`;
+    }
+    
+    return element;
+}
+
+function startWeatherEffect(type, isManual = false) {
+    const container = document.querySelector('.weather-container');
+    if (currentWeather === type && !isManual) return;
+    
+    container.innerHTML = '';
+    currentWeather = type;
+    
+    updateWeatherButtons(type);
+    
+    if (type === 'none') {
+        document.querySelector('.apple').classList.remove('snowy');
+        return;
+    }
+
+    const count = weatherConfig[type].count;
+    for (let i = 0; i < count; i++) {
+        const element = createWeatherElement(type);
+        container.appendChild(element);
+        
+        element.addEventListener('animationend', () => {
+            element.remove();
+        });
+    }
+
+    document.querySelector('.apple').classList.toggle('snowy', type === 'snow');
+
+    const interval = setInterval(() => {
+        if (currentWeather !== type) {
+            clearInterval(interval);
+            return;
+        }
+        const element = createWeatherElement(type);
+        container.appendChild(element);
+        
+        element.addEventListener('animationend', () => {
+            element.remove();
+        });
+    }, type === 'rain' ? 50 : 200);
+}
+
+function updateWeatherButtons(activeWeather) {
+    document.querySelectorAll('.weather-button').forEach(button => {
+        button.classList.toggle('active', button.dataset.weather === activeWeather);
+    });
+}
+
+function randomWeather() {
+    if (!weatherConfig[currentWeather]?.autoChange) return;
+    
+    const weathers = ['none', 'rain', 'snow'];
+    const newWeather = weathers[Math.floor(Math.random() * weathers.length)];
+    startWeatherEffect(newWeather);
+}
+
+function updateWeatherSettings(type, setting, value) {
+    weatherConfig[type][setting] = parseFloat(value);
+    if (currentWeather === type) {
+        startWeatherEffect(type, true);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+   
+    if (!document.querySelector('.weather-container')) {
+        const weatherContainer = document.createElement('div');
+        weatherContainer.className = 'weather-container';
+        document.querySelector('.apple-simulator').appendChild(weatherContainer);
+    }
+    
+    const controlPanel = document.querySelector('.control-panel');
+    
+    const weatherControls = document.createElement('div');
+    weatherControls.className = 'weather-controls';
+    weatherControls.innerHTML = `
+        <button class="weather-button active" data-weather="none">
+            <span class="icon">🌞</span> Nắng
+        </button>
+        <button class="weather-button" data-weather="rain">
+            <span class="icon">🌧</span> Mưa
+        </button>
+        <button class="weather-button" data-weather="snow">
+            <span class="icon">🌨</span> Tuyết
+        </button>
+    `;
+    
+    const weatherSettings = document.createElement('div');
+    weatherSettings.className = 'weather-settings';
+    weatherSettings.innerHTML = `
+        <div class="weather-setting-group">
+            <label>Tốc độ rơi</label>
+            <input type="range" min="0.5" max="2" step="0.1" value="1" class="weather-speed">
+            <div class="weather-setting-value">1x</div>
+        </div>
+        <div class="weather-setting-group">
+            <label>Cường độ</label>
+            <input type="range" min="0.5" max="2" step="0.1" value="1" class="weather-intensity">
+            <div class="weather-setting-value">1x</div>
+        </div>
+        <div class="weather-setting-group">
+            <label>
+                <input type="checkbox" class="weather-auto" checked>
+                Tự động thay đổi sau 1 phút
+            </label>
+        </div>
+    `;
+    
+    controlPanel.parentNode.insertBefore(weatherControls, controlPanel);
+    controlPanel.parentNode.insertBefore(weatherSettings, controlPanel);
+    
+    weatherControls.addEventListener('click', (e) => {
+        const button = e.target.closest('.weather-button');
+        if (!button) return;
+        
+        const weather = button.dataset.weather;
+        startWeatherEffect(weather, true);
+        weatherSettings.classList.toggle('visible', weather !== 'none');
+    });
+    
+    const speedInput = weatherSettings.querySelector('.weather-speed');
+    const intensityInput = weatherSettings.querySelector('.weather-intensity');
+    const autoInput = weatherSettings.querySelector('.weather-auto');
+    
+    speedInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        e.target.nextElementSibling.textContent = `${value}x`;
+        if (currentWeather !== 'none') {
+            updateWeatherSettings(currentWeather, 'speed', value);
+        }
+    });
+    
+    intensityInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        e.target.nextElementSibling.textContent = `${value}x`;
+        if (currentWeather !== 'none') {
+            updateWeatherSettings(currentWeather, 'intensity', value);
+        }
+    });
+    
+    autoInput.addEventListener('change', (e) => {
+        if (currentWeather !== 'none') {
+            weatherConfig[currentWeather].autoChange = e.target.checked;
+        }
+    });
+
+    randomWeather();
+    weatherInterval = setInterval(randomWeather, 60000);
+});
+
+window.addEventListener('beforeunload', () => {
+    clearInterval(weatherInterval);
+});
 document.addEventListener('DOMContentLoaded', () => {
     initializeFlies();
     updateAppleAppearance();
