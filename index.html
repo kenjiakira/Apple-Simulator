@@ -8,7 +8,11 @@
 </head>
 <body>
     <div class="apple-simulator">
-        <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">🔊</button>
+        <div class="simulator-header">
+            <h1 class="simulator-title">Giả Lập Quả Táo</h1>
+            <button class="sound-toggle" id="sound-toggle">🔊</button>
+            <button class="mode-toggle" id="mode-toggle">🌙</button>
+        </div>
         
         <div class="apple-container" id="apple-container">
             <div class="apple" id="apple"></div>
@@ -21,28 +25,32 @@
             <div class="fly" id="fly4"></div>
         </div>
         
-        <div class="progress-bar">
-            <div class="progress-indicator" id="ripeness-progress"></div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-indicator" id="ripeness-progress"></div>
+            </div>
+            <div class="ripeness-display" id="ripeness-text">
+                Độ Chín: Trung Bình
+            </div>
         </div>
-
-        <div class="ripeness-display" id="ripeness-text">Độ Chín: Trung Bình</div>
-
+        
         <div class="control-panel">
             <button class="button" onclick="changeRipeness('lighter')">Chín Nhạt</button>
             <button class="button" onclick="changeRipeness('reset')">Đặt Lại</button>
             <button class="button" onclick="changeRipeness('darker')">Chín Đậm</button>
         </div>
-
-        <div class="info-display" id="info-display">
-            <p id="info-details">Thông tin chi tiết về độ chín sẽ được hiển thị ở đây</p>
+        
+        <div class="info-display">
+            <p class="info-details" id="info-details">
+                Thông tin chi tiết về độ chín sẽ được hiển thị ở đây
+            </p>
         </div>
     </div>
 
     <audio id="ripeSound" src="sound/button-09.mp3"></audio>
     <audio id="unripeSound" src="sound/button-11.mp3"></audio>
     <audio id="rottenSound" src="sound/fly.mp3"></audio>
-
-    <script type="text/javascript" src="script.js" ></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
-    

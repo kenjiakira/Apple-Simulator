@@ -1,225 +1,283 @@
 :root {
-    --primary-color: #ff4500;
-    --secondary-color: #4CAF50;
-    --bg-color: #f4f4f4;
-    --text-color: #333;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --background: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --border: #e2e8f0;
+    --ring: #bfdbfe;
 }
+
+.light-mode {
+    --background: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --border: #e2e8f0;
+    --ring: #bfdbfe;
+}
+
+.dark-mode {
+    --background: #0f172a;
+    --card: #1e293b;
+    --text: #f8fafc;
+    --border: #334155;
+    --ring: #1e40af;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: var(--bg-color);
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
-    padding: 20px; 
+    min-height: 100vh;
+    background: var(--background);
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    line-height: 1.5;
+    transition: background-color 0.3s ease;
 }
-.apple-simulator {
-    text-align: center;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 40px;
-    width: 100%;
-    max-width: 450px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    height: 90vh;  /* Ensure full height usage in 9:16 ratio */
-}
-.apple-container {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    margin: 0 auto 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
-}
-.apple {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background-color: #ff0800;
-    border-radius: 50%;
-    transform: rotate(45deg);
-    box-shadow: inset -20px -20px 30px rgba(0,0,0,0.2), 10px 10px 30px rgba(0,0,0,0.1);
-    transition: all 0.5s ease;
-}
-.apple-stem {
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-45deg);
-    width: 15px;
-    height: 50px;
-    background-color: #2d4029;
-    border-radius: 10px;
-    z-index: 10;
-    transition: transform 0.3s ease;
-}
-.apple-leaf {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translate(-50%, 0) rotate(30deg);
-    width: 50px;
-    height: 50px;
-    background-color: #6db33f;
-    border-radius: 50% 0;
-    z-index: 10;
-    transition: transform 0.3s ease;
-}
-.control-panel {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap; 
-}
-.button {
-    padding: 12px 20px;
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: bold;
-    position: relative;
-    overflow: hidden;
-    font-size: 14px; 
-}
-.button:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: all 0.5s;
-}
-.button:hover:before {
-    left: 100%;
-}
-.button:hover {
-    transform: scale(1.05);
-    background-color: #45a049;
-}
-.button:active {
-    transform: scale(0.95);
-}
-.ripeness-display {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--text-color);
-    margin-bottom: 20px;
-    transition: color 0.3s ease;
-}
-.progress-bar {
-    width: 100%;
-    height: 20px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-}
-.progress-indicator {
-    height: 100%;
-    background-color: #ff4500;
-    transition: width 0.3s ease;
-}
-.info-display {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 20px;
-    text-align: left;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.sound-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+
+#mode-toggle {
     background: none;
     border: none;
+    font-size: 1.5rem;
     cursor: pointer;
-    font-size: 24px;
+    padding: 0.5rem;
+    border-radius: 50%;
 }
 
-@keyframes fly {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(30px, -20px) rotate(20deg); }
-    50% { transform: translate(-40px, 30px) rotate(-15deg); }
-    75% { transform: translate(20px, -10px) rotate(10deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+.apple-simulator {
+    width: 90%;
+    max-width: 500px;
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
 }
 
-@keyframes flyAway {
-    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-    50% { transform: translate(100px, -100px) rotate(45deg) scale(1.2); }
-    100% { transform: translate(200px, -200px) rotate(90deg) scale(1.5); opacity: 0; }
+  .simulator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .simulator-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sound-toggle, .mode-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    transition: background-color 0.2s;
+  }
+
+  .sound-toggle:hover, .mode-toggle:hover {
+    background: var(--background);
+  }
+  .apple-container {
+    position: relative;
+    height: 300px;
+    margin: 2rem 0;
+    perspective: 1000px;
+}
+
+.apple {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    box-shadow: 
+      inset -20px -20px 30px rgba(0,0,0,0.2),
+      10px 10px 30px rgba(0,0,0,0.1),
+      0 0 50px rgba(0,0,0,0.05);
 }
 
 .fly {
     position: absolute;
-    width: 10px;
-    height: 5px;
-    background-color: #333;
-    border-radius: 50%;
-    animation: fly 2s infinite linear;
+    width: 8px;
+    height: 4px;
+    background: #333;
+    border-radius: 4px;
     opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.5s ease;
+    pointer-events: none; 
 }
 
-.fly:nth-child(1) { 
-    animation-delay: 0s;
-    top: 50px;
-    left: 100px;
+@keyframes fly {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(20px, -15px); }
+    50% { transform: translate(-15px, 10px); }
+    75% { transform: translate(10px, -5px); }
+    100% { transform: translate(0, 0); }
 }
-.fly:nth-child(2) { 
-    animation-delay: 0.5s;
+
+@keyframes flyAway {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(50px, -50px) scale(0); opacity: 0; }
+}
+
+.fly.visible {
+    opacity: 1;
+}
+
+.fly:nth-child(1) { top: 45%; left: 45%; }
+.fly:nth-child(2) { top: 40%; left: 55%; }
+.fly:nth-child(3) { top: 55%; left: 45%; }
+.fly:nth-child(4) { top: 50%; left: 55%; }
+
+  .apple-stem {
+    position: absolute;
     top: 30px;
-    right: 100px;
-}
-.fly:nth-child(3) { 
-    animation-delay: 1s;
-    bottom: 50px;
-    left: 80px;
-}
-.fly:nth-child(4) { 
-    animation-delay: 1.5s;
-    bottom: 30px;
-    right: 80px;
-}
+    left: 50%;
+    width: 12px;
+    height: 40px;
+    background: #2d4029;
+    border-radius: 6px;
+    transform-origin: bottom center;
+    transition: transform 0.5s ease;
+  }
 
-@media (max-width: 600px) {
+  .apple-leaf {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: #6db33f;
+    border-radius: 50% 0;
+    transform-origin: bottom center;
+    transition: transform 0.5s ease;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .progress-container {
+    margin: 2rem 0;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+
+  .progress-indicator {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+  }
+
+  .ripeness-display {
+    text-align: center;
+    font-weight: 600;
+    margin: 1rem 0;
+    color: var(--text);
+  }
+
+  .control-panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .button {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 12px;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+  }
+
+  .button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+  }
+
+  .button:active {
+    transform: translateY(1px);
+  }
+
+  .info-display {
+    background: var(--background);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .info-details {
+    font-size: 0.875rem;
+    color: var(--text);
+    line-height: 1.6;
+    word-wrap: break-word; 
+    white-space: normal;
+  }
+
+  .fly.escape {
+    animation: flyAway 1s forwards;
+  }
+
+  @media (max-width: 640px) {
+    .apple-simulator {
+      padding: 1.5rem;
+    }
+
     .apple-container {
-        height: 200px; 
+      height: 250px;
     }
+
     .apple {
-        width: 180px;
-        height: 180px;
+      width: 150px;
+      height: 150px;
     }
+
     .control-panel {
-        flex-direction: column;
-        gap: 10px;
+      grid-template-columns: 1fr;
     }
+
     .button {
-        padding: 12px;
-        width: 100%; 
+      width: 100%;
     }
-    .ripeness-display {
-        font-size: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0f172a;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --border: #334155;
+      --ring: #1e40af;
     }
-    .info-display {
-        padding: 10px;
+
+    .apple-simulator {
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
     }
-}
+  }
