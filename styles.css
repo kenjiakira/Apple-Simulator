@@ -6,7 +6,7 @@
     --text: #1e293b;
     --border: #e2e8f0;
     --ring: #bfdbfe;
-}
+}   
 
 .light-mode {
     --background: #f8fafc;
@@ -56,8 +56,8 @@ body {
     max-width: 500px;
     background: var(--card);
     border-radius: 24px;
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
-    padding: 2rem;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem; 
     position: relative;
     overflow: hidden;
     transition: background-color 0.3s ease;
@@ -94,18 +94,18 @@ body {
   }
   .apple-container {
     position: relative;
-    height: 300px;
-    margin: 2rem 0;
+    height: 200px;
+    margin: 1.5rem 0; 
     perspective: 1000px;
-}
+}       
 
 .apple {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px; 
     border-radius: 50%;
     transition: all 0.5s ease;
     box-shadow: 
@@ -141,7 +141,9 @@ body {
 .fly.visible {
     opacity: 1;
 }
-
+.progress-container {
+    margin: 1rem 0; 
+}
 .fly:nth-child(1) { top: 45%; left: 45%; }
 .fly:nth-child(2) { top: 40%; left: 55%; }
 .fly:nth-child(3) { top: 55%; left: 45%; }
@@ -201,12 +203,11 @@ body {
   .control-panel {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-
-  .button {
-    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+.button {
+    padding: 0.5rem 1rem; 
     border: none;
     border-radius: 12px;
     background: var(--primary);
@@ -214,9 +215,8 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 0.875rem;
-  }
-
+    font-size: 0.75rem;
+}
   .button:hover {
     background: var(--primary-hover);
     transform: translateY(-1px);
@@ -244,7 +244,7 @@ body {
   .fly.escape {
     animation: flyAway 1s forwards;
   }
-/* Previous weather effects CSS remains the same */
+
 .weather-container {
     position: absolute;
     top: 0;
@@ -317,11 +317,10 @@ body {
     filter: brightness(1.2) saturate(0.8);
 }
 
-/* New Weather Control Menu Styles */
 .weather-controls {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem; 
     flex-wrap: wrap;
 }
 
@@ -338,7 +337,7 @@ body {
     gap: 0.5rem;
     flex: 1;
     justify-content: center;
-    min-width: 120px;
+    min-width: 100px;
 }
 
 .weather-button:hover {
@@ -390,28 +389,30 @@ body {
     color: var(--text);
     text-align: right;
 }
-  @media (max-width: 640px) {
+
+@media (max-width: 640px) {
     .apple-simulator {
-      padding: 1.5rem;
+        padding: 1.25rem; 
     }
 
     .apple-container {
-      height: 250px;
+        height: 200px; 
     }
 
     .apple {
-      width: 150px;
-      height: 150px;
+        width: 130px;
+        height: 130px;
     }
 
     .control-panel {
-      grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
     }
 
     .button {
-      width: 100%;
+        width: 100%; 
+        font-size: 0.875rem;
     }
-  }
+}
 
   @media (prefers-color-scheme: dark) {
     :root {

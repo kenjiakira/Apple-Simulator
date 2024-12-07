@@ -1,8 +1,6 @@
-// Global variables
 let ripeness = 0.5; 
 let soundEnabled = true;
 
-// DOM Elements
 const apple = document.querySelector('.apple');
 const appleStem = document.querySelector('.apple-stem');
 const appleLeaf = document.querySelector('.apple-leaf');
